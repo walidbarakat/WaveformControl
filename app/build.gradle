@@ -17,6 +17,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jniLibs']
+        }
+    }
 }
 
 dependencies {
@@ -27,3 +33,5 @@ dependencies {
     compile 'com.android.support:design:27.1.1'
     compile project (':waveform')
 }
+
+android.sourceSets.main.jniLibs.srcDirs = ['src/main/cpp']

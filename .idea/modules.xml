@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/WaveformControl.iml" filepath="$PROJECT_DIR$/WaveformControl.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/waveform/waveform.iml" filepath="$PROJECT_DIR$/waveform/waveform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/WaveformControl.iml" filepath="$PROJECT_DIR$/.idea/WaveformControl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/WaveformControl.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/WaveformControl.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/waveform/WaveformControl.waveform.iml" filepath="$PROJECT_DIR$/.idea/modules/waveform/WaveformControl.waveform.iml" />
     </modules>
   </component>
 </project>

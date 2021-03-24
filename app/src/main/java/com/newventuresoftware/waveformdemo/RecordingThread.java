@@ -20,6 +20,13 @@ import android.media.MediaRecorder;
 import android.util.Log;
 
 public class RecordingThread {
+    static {
+        System.loadLibrary("native-buffer-calculations");
+    }
+    public native static boolean bufferIsNull(short[] buffer);
+    public native static void setAvgBufferLength(short[] buffer);
+    public native static int getAvgBufferLength();
+
     private static final String LOG_TAG = RecordingThread.class.getSimpleName();
     private static final int SAMPLE_RATE = 44100;
 
@@ -87,13 +94,20 @@ public class RecordingThread {
         Log.v(LOG_TAG, "Start recording");
 
         long shortsRead = 0;
-        while (mShouldContinue) {
+        while (mShouldContinue && !bufferIsNull(audioBuffer)) {
             int numberOfShort = record.read(audioBuffer, 0, audioBuffer.length);
             shortsRead += numberOfShort;
+
+            // feed audioBuffer to prepare avg calculations
+            setAvgBufferLength(audioBuffer);
 
             // Notify waveform
             mListener.onAudioDataReceived(audioBuffer);
         }
+
+        // feed audioBuffer to get avg calculation result
+        int avg = getAvgBufferLength();
+        Log.v(LOG_TAG, "average for feeded buffers is: " + avg);
 
         record.stop();
         record.release();
