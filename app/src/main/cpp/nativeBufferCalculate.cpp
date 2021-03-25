@@ -8,17 +8,24 @@ static int totalBufferCount = 0;
 extern "C" {
   JNI_EXPORT bool JNICALL
   Java_com_newventuresoftware_waveformdemo_RecordingThread_bufferIsNull(JNIEnv* env, jclass clazz, jshortArray audioBuffer) {
-     short* buffer = env->GetShortArrayElements(audioBuffer, true); // true parameter here is to decide if buffer is alias aka pointer to java audioBuffer
-     return (!buffer)? true : false;
+     short* buffer = env->GetShortArrayElements(audioBuffer, nullptr);
+
+     if(buffer) {
+       env->ReleaseShortArrayElements(audioBuffer, buffer, 0);
+       return false;
+     }
+     else return true;
   }
 
   JNI_EXPORT void JNICALL
   Java_com_newventuresoftware_waveformdemo_RecordingThread_setAvgBufferLength(JNIEnv* env, jclass clazz, jshortArray audioBuffer) {
-     short* buffer = env->GetShortArrayElements(audioBuffer, true);
+     short* buffer = env->GetShortArrayElements(audioBuffer, nullptr);
      totalBufferLength += env->GetArrayLength(audioBuffer);
      totalBufferCount++;
 
      avg = totalBufferLength / totalBufferCount;
+
+     if(buffer) env->ReleaseShortArrayElements(audioBuffer, buffer, 0);
   }
 
   JNI_EXPORT int JNICALL
