@@ -8,10 +8,10 @@ static int totalBufferCount = 0;
 extern "C" {
   JNI_EXPORT bool JNICALL
   Java_com_newventuresoftware_waveformdemo_RecordingThread_bufferIsNull(JNIEnv* env, jclass clazz, jshortArray audioBuffer) {
-     short* buffer = env->GetShortArrayElements(audioBuffer, nullptr);
+     short* buffer = env->GetPrimitiveArrayCritical(audioBuffer, nullptr);
 
      if(buffer) {
-       env->ReleaseShortArrayElements(audioBuffer, buffer, 0);
+       env->ReleasePrimitiveArrayCritical(audioBuffer, buffer, 0);
        return false;
      }
      else return true;
@@ -19,13 +19,13 @@ extern "C" {
 
   JNI_EXPORT void JNICALL
   Java_com_newventuresoftware_waveformdemo_RecordingThread_setAvgBufferLength(JNIEnv* env, jclass clazz, jshortArray audioBuffer) {
-     short* buffer = env->GetShortArrayElements(audioBuffer, nullptr);
+     short* buffer = env->GetPrimitiveArrayCritical(audioBuffer, nullptr);
      totalBufferLength += env->GetArrayLength(audioBuffer);
      totalBufferCount++;
 
      avg = totalBufferLength / totalBufferCount;
 
-     if(buffer) env->ReleaseShortArrayElements(audioBuffer, buffer, 0);
+     if(buffer) env->ReleasePrimitiveArrayCritical(audioBuffer, buffer, 0);
   }
 
   JNI_EXPORT int JNICALL
